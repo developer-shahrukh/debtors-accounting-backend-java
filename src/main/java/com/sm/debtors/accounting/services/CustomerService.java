@@ -26,4 +26,19 @@ public class CustomerService {
     public void deleteCustomer(Integer code){
         customerDao.deleteById(code);
     }
+
+    public int calculate(String type, int a, int b) throws Exception
+    {
+
+        if(type.equals("SUM")){
+            return (a+b);
+        }
+        if(type.equals("SUB")){
+            return a-b;
+        }
+        if(type.equals("MUL")){
+            return a*b;
+        }
+        throw new Exception("Something is missing");
+    }
 }
