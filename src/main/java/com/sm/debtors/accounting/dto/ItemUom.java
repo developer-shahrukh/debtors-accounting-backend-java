@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name ="ac_uom")
-public class Uom {
+@Entity(name="ac_item_uom")
+public class ItemUom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="code")
-    private Integer code;
-    @Column(name="name")
-    private String name;
+    private Integer id;
+    @Column(name="item_code")
+    private Integer itemCode;
+    @Column(name="uom_code")
+    private Integer uomCode;
 }

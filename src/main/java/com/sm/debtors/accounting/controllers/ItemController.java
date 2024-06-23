@@ -1,5 +1,6 @@
 package com.sm.debtors.accounting.controllers;
 
+import com.sm.debtors.accounting.dto.Customer;
 import com.sm.debtors.accounting.dto.Item;
 import com.sm.debtors.accounting.services.ItemService;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,6 @@ public class ItemController {
 
     @PutMapping("/updateItem")
     public ResponseEntity<Object> updateItem(@RequestBody Item itemData){
-        return itemService.addItem(itemData);
+        return itemService.updateItem(itemData);
     }
 }

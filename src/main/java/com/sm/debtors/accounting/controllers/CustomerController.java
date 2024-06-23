@@ -23,38 +23,23 @@ public class CustomerController {
     @GetMapping("/getCustomers")
     public List<Customer> getCustomers(){ return customerService.getAllCustomers();}
 
-    @GetMapping("/{code}")
-    public ResponseEntity<Customer> getCustomerByCode(@PathVariable Integer code) {
-        Optional<Customer> user = customerService.getByCode(code);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/getCustomer/{code}")
+    public Optional<Customer> getByCode(@PathVariable Integer code) {
+       return customerService.getByCode(code);
     }
 
-    @PostMapping
-    public Customer createUser(@RequestBody Customer customer) {
+    @PostMapping("/addCustomer")
+    public ResponseEntity<Object> addCustomer(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
     }
 
-    @PutMapping("/{code}")
-    public ResponseEntity<Customer> updateUser(@PathVariable Integer code, @RequestBody Customer customerDetails) {
-        Optional<Customer> customer = customerService.getByCode(code);
-        if (customer.isPresent()) {
-            Customer updatedCustomer = customer.get();
-            //updatedCustomer.setName(customerDetails.getName());
-            //updatedCustomer.setEmail(customerDetails.getEmail());
-            customerService.addCustomer(updatedCustomer);
-            return ResponseEntity.ok(updatedCustomer);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/updateCustomer")
+    public ResponseEntity<Object> updateCustomer(@RequestBody Customer customer) {
+        return customerService.updateCustomer(customer);
     }
 
-    @DeleteMapping("/{code}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Integer code) {
-        if (customerService.getByCode(code).isPresent()) {
-            customerService.deleteCustomer(code);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+   @DeleteMapping("/deleteCustomer/{code}")
+    public void deleteCustomer(@PathVariable Integer code) {
+       customerService.deleteCustomer(code);
+   }
 }

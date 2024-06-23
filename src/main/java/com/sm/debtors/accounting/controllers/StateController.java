@@ -1,15 +1,16 @@
 package com.sm.debtors.accounting.controllers;
 
+import com.sm.debtors.accounting.dto.Item;
 import com.sm.debtors.accounting.dto.State;
 import com.sm.debtors.accounting.services.StateService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApiIgnore
 @RestController()
@@ -25,4 +26,8 @@ public class StateController {
         return stateService.getAllStates();
     }
 
+    @GetMapping("/getState/{code}")
+    public Optional<State> getByCode(@PathVariable Integer code){
+        return stateService.getByCode(code);
+    }
 }
