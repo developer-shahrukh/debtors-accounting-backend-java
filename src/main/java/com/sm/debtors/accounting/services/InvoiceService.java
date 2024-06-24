@@ -17,8 +17,6 @@ import java.util.UUID;
 public class InvoiceService {
 
     @Autowired
-    private Item itemsData;
-    @Autowired
     private TraderDao traderDao;
     @Autowired
     private CustomerDao customerDao;

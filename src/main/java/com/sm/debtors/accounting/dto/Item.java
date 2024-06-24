@@ -20,9 +20,14 @@ public class Item {
     @Column(name="hsn_code")
     private Integer hsnCode;
 
+    @Transient
     private ItemRate itemRate;
+    @Transient
     private Double sgstAmount;
+    @Transient
     private Double cgstAmount;
+    @Transient
     private Double igstAmount;
+    @Transient
     private Double amountWithTax;
 }
