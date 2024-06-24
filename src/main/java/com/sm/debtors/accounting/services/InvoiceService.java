@@ -1,6 +1,5 @@
 package com.sm.debtors.accounting.services;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sm.debtors.accounting.dao.*;
 import com.sm.debtors.accounting.dto.*;
 import com.sm.debtors.accounting.exceptions.CustomerNotFoundException;
@@ -10,6 +9,8 @@ import com.sm.debtors.accounting.utils.TaxCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,11 +45,16 @@ public class InvoiceService {
         Double totalCgstAmount = 0.0;
         Double totalIgstAmount = 0.0;
         for(Item item: invoiceRequest.getItems()){
-            Item itemFromDB = null;
-            ItemTax itemTaxFromDB = null;
-            Uom uomFromDB = null;
-            ItemRate itemRateFromDB = null;
-            fetchFromDB(item.getCode(), item.getItemRate().getUomCode(), itemFromDB, itemTaxFromDB, uomFromDB,itemRateFromDB);
+            Item itemFromDB =null;
+            ItemTax itemTaxFromDB =null;
+            Uom uomFromDB =null;
+            ItemRate itemRateFromDB =null;
+
+            Map<String, Object> dbObjects = fetchFromDB(item.getCode(), item.getItemRate().getUomCode(), itemFromDB, itemTaxFromDB, uomFromDB, itemRateFromDB);
+            itemFromDB =(Item) dbObjects.get("item");
+            itemTaxFromDB =(ItemTax) dbObjects.get("itemTax");
+            uomFromDB =(Uom) dbObjects.get("uom");
+            itemRateFromDB =(ItemRate) dbObjects.get("itemRate");
 
             Double sgstAmount = 0.0;
             Double cgstAmount = 0.0;
@@ -86,18 +92,20 @@ public class InvoiceService {
         return invoiceResponse;
     }
 
-    private void fetchFromDB(Integer itemCode, Integer uomCode, Item itemDB, ItemTax itemTaxDB, Uom uomDB, ItemRate itemRateDB){
+    private Map<String, Object> fetchFromDB(Integer itemCode, Integer uomCode, Item itemDB, ItemTax itemTaxDB, Uom uomDB, ItemRate itemRateDB){
         Optional<Item> itemOptional = itemDao.findById(itemCode);
         Optional<ItemTax> itemTaxOptional = itemTaxDao.findById(itemCode);
         Optional<Uom> uomOptional = uomDao.findById(uomCode);
-        Optional<ItemRate> itemRateOptional = itemRateDao.findById(itemCode);
+        Optional<ItemRate> itemRateOptional = itemRateDao.findByItemCodeAndUomCode(itemCode, uomCode);
         if (itemOptional.isEmpty()) throw new ItemNotFoundException();
         if (itemTaxOptional.isEmpty()) throw new ItemNotFoundException();
         if (uomOptional.isEmpty()) throw new ItemNotFoundException();
-        itemDB = itemOptional.get();
-        itemTaxDB = itemTaxOptional.get();
-        uomDB = uomOptional.get();
-        itemRateDB = itemRateOptional.get();
+        Map<String, Object> dbOjects = new HashMap<>();
+        dbOjects.put("item",itemOptional.get());
+        dbOjects.put("itemTax",itemTaxOptional.get());
+        dbOjects.put("uom",uomOptional.get());
+        dbOjects.put("itemRate",itemRateOptional.get());
+        return dbOjects;
     }
 
     private Double calculateTotalTax(double itemRate, boolean isIgstEligible, Float sgstRate, Float cgstRate, Float igstRate){
