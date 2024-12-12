@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class ItemService {
@@ -26,14 +27,26 @@ public class ItemService {
     private ItemUomDao itemUomDao;
 
     public List<Item> getAllItems() {
-        return itemDao.findAll();
+       return itemDao.findAll();
     }
 
     public Optional<Item> getByCode(Integer code) {
         if (ObjectUtils.isEmpty(code)) {
             throw new InvalidInputException("Code not provided");
         }
-        return itemDao.findById(code);
+        Optional<Item> optionalItem=itemDao.findById(code);
+
+        if(optionalItem.isPresent()) {
+            Item item = optionalItem.get();
+            Optional<ItemTax> optionalItemTax=itemTaxDao.findById(code);
+            optionalItemTax.ifPresent(itemTax->{
+                item.setCgstAmount(Double.valueOf(itemTax.getCgst()));
+                item.setSgstAmount(Double.valueOf(itemTax.getSgst()));
+                item.setIgstAmount(Double.valueOf(itemTax.getIgst()));
+            });
+        }
+        //return itemDao.findById(code);
+        return optionalItem;
     }
 
     public ResponseEntity<Object> addItem(Item item) {

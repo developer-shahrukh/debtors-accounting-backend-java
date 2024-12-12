@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @ApiIgnore
 @RestController
-@RequestMapping("api")
+//@RequestMapping("api")
 public class UomController {
     @Autowired
     private UomService uomService;

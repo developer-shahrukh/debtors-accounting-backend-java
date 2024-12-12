@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.CookieValue;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +29,6 @@ public class Item {
     private Double igstAmount;
     @Transient
     private Double amountWithTax;
+    @Transient
+    private Uom uom;
 }

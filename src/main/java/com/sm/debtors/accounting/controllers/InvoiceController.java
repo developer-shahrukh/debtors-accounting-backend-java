@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 
-@RequestMapping("api")
+//@RequestMapping("api")
 @RestController
 @ApiIgnore
 public class InvoiceController {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ApiIgnore
-@RequestMapping("api")
+//@RequestMapping("api")
 @RestController
 public class TraderController {
     @Autowired
@@ -36,6 +36,7 @@ public class TraderController {
     }
     @PutMapping("/updateTrader")
     public Trader updateTrader(@RequestBody Trader trader){
+        System.out.println(trader);
             return traderService.updateTrader(trader);
 
     }

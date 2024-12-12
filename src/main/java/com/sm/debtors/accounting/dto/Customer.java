@@ -13,7 +13,7 @@ public class Customer {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ac_customer_code_seq_gen")
-    @SequenceGenerator(name = "ac_customer_code_seq_gen", sequenceName = "ac_customer_code_seq", allocationSize = 1)
+    @SequenceGenerator(name = "ac_customer_code_seq_gen", sequenceName = "ac_customer_code_seq", allocationSize =1)
     @Column(name="code")
     private Integer code;
     @Column(name ="name")
