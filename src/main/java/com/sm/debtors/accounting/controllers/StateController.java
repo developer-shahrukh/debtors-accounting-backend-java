@@ -26,7 +26,7 @@ public class StateController {
         return stateService.getAllStates();
     }
 
-    @GetMapping("/getState/{code}")
+    @GetMapping("/getByStateCode/{code}")
     public Optional<State> getByCode(@PathVariable Integer code){
         return stateService.getByCode(code);
     }

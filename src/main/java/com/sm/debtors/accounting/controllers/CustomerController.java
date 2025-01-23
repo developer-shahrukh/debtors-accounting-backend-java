@@ -21,10 +21,10 @@ public class CustomerController {
     private CustomerService customerService;
 
     @ApiOperation( value="To all customers")
-    @GetMapping("   /getCustomers")
+    @GetMapping("/getCustomers")
     public List<Customer> getCustomers(){ return customerService.getAllCustomers();}
 
-    @GetMapping("/getCustomer/{code}")
+    @GetMapping("/getCustomerByCode/{code}")
     public Optional<Customer> getByCode(@PathVariable Integer code) {
        return customerService.getByCode(code);
     }

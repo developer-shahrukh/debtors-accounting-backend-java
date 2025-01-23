@@ -25,11 +25,11 @@ public class UomController {
         return uomService.getUoms();
     }
 
-    @GetMapping("/getUom/{code}")
+    @GetMapping("/getUnitOfMeasurementByCode/{code}")
     public Optional<Uom> getByCode(@PathVariable Integer code){
         return uomService.getByCode(code);
     }
-    @PostMapping("/addUom")
+    @PostMapping("/addUnitOfMeasurement")
     public ResponseEntity<Object> addUom(@RequestBody Uom uom){
         return uomService.addUom(uom);
     }

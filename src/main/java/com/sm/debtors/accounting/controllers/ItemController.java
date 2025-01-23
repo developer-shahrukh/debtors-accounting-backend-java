@@ -36,7 +36,7 @@ public class ItemController {
     }
 
 
-    @DeleteMapping("/deleteItem/{code}")
+    @DeleteMapping("/deleteItemByCode/{code}")
     public void deleteByCode(@PathVariable Integer code){
         itemService.deleteByCode(code);
     }
